@@ -1,0 +1,23 @@
+import redis
+import json
+
+# transform data to json first
+json = json.dumps(data)
+
+#lancer la base
+redis = redis.StrictRedis(host=REDIS_HOST_ADDRESS, port=REDIS_PORT, db=REDIS_DB)
+
+# save to redis
+redis.set(key, data)
+
+# retrieve from redis
+# decode('utf-8') to encapsulate
+data_from_redis= redis.get(key).decode('utf-8')
+
+#get object as json
+data_json_format = json.loads(data_from_redis)
+
+# iterate to get data
+for i in data_json_format :
+   object = i['index']
+   sub_object = i['index']['sub_index']
